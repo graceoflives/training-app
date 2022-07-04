@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import LeftMenu from "./components/LeftMenu";
 import Bin2Dec from "./projects/Bin2Dec";
+import BorderRadiusPreviewer from "./projects/BorderRadiusPreviewer";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/bin2dec" element={<Bin2Dec />} />
+                    <Route path="/borderRadiusPreviewer" element={<BorderRadiusPreviewer />} />
                 </Routes>
             </Box>
         </Box>

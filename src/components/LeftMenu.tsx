@@ -1,7 +1,7 @@
 import { Button, Divider, Drawer, MenuItem, MenuList } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const drawerWidth = 240;
+const drawerWidth = 360;
 const LeftMenu = () => {
     return (
         <Drawer
@@ -17,14 +17,19 @@ const LeftMenu = () => {
         >
             <MenuList>
                 <MenuItem>
-                    <Button component={Link} to="/" variant="outlined">
+                    <Button component={Link} to="/" variant="outlined" fullWidth>
                         Home
                     </Button>
                 </MenuItem>
                 <Divider />
                 <MenuItem>
-                    <Button component={Link} to="/bin2dec">
+                    <Button component={Link} to="/bin2dec" fullWidth>
                         Bin2Dec
+                    </Button>
+                </MenuItem>
+                <MenuItem>
+                    <Button component={Link} to="/borderRadiusPreviewer" fullWidth>
+                        Border Radius Previewer
                     </Button>
                 </MenuItem>
             </MenuList>
