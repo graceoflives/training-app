@@ -2,16 +2,16 @@ import { Button, Divider, Drawer, MenuItem, MenuList } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
-const LeftMenu = (props: any) => {
+const LeftMenu = () => {
     return (
         <Drawer
             anchor={"left"}
             variant="permanent"
             sx={{
                 width: drawerWidth,
-                '& .MuiDrawer-paper': {
+                "& .MuiDrawer-paper": {
                     width: drawerWidth,
-                    boxSizing: 'border-box',
+                    boxSizing: "border-box",
                 },
             }}
         >
