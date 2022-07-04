@@ -28,7 +28,8 @@ const Bin2Dec = () => {
             color={color}
             helperText={helperText}
             fullWidth
-            inputProps={{ inputMode: "numeric", pattern: "[0-1]*", maxLength: 32 }} />
+            inputProps={{ inputMode: "numeric", pattern: "[0-1]*", maxLength: 32 }} 
+        />
         {
             color === "primary"
             && binary !== ""
