@@ -113,22 +113,23 @@ const BorderRadiusPreviewer = () => {
                     />
                 )}
             </Grid>
-            <Box
-                sx={{
-                    width: 300,
-                    height: 300,
-                    backgroundColor: "primary.dark",
-                    "&:hover": {
-                        backgroundColor: "primary.main",
-                        opacity: [0.9, 0.8, 0.7],
-                        cursor: "pointer"
-                    },
-                    ...borderRadius.reduce((prev: {}, {corner, sides}) => ({
-                        ...prev, 
-                        [`border${corner}Radius`]: `${sides[0].value}px ${sides[1].value}px`
-                    }), {})
-                }}
-            /></>
+            <Grid container direction="column" alignItems="center" justifyContent="center" mt={2}>
+                <Typography variant="body1" mb={2}>Preview</Typography>
+                <Box
+                    sx={{
+                        width: "50vh",
+                        height: "50vh",
+                        borderWidth: 4,
+                        borderStyle: "solid",
+                        borderColor: "primary.dark",
+                        ...borderRadius.reduce((prev: {}, {corner, sides}) => ({
+                            ...prev, 
+                            [`border${corner}Radius`]: `${sides[0].value}px ${sides[1].value}px`
+                        }), {})
+                    }}
+                />
+            </Grid>
+        </>
     )
 };
 
@@ -141,11 +142,11 @@ interface InputCornerProps {
 const InputCorner = (props: InputCornerProps) => {
     const {corner, onChange} = props;
     return (
-        <Grid item xs={6}>
+        <Grid item xs={6} md={4} lg={3} p={2}>
             <Typography variant="h6">{corner.corner}</Typography>
             {corner.sides.map((s) => (
                 <Fragment key={s.side}>
-                    <Typography gutterBottom>{s.side}</Typography>
+                    <Typography my={2}>{s.side}</Typography>
                     <Slider
                         value={s.value}
                         size="small"
