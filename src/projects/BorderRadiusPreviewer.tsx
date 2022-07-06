@@ -1,6 +1,13 @@
-import { Box, Card, CardContent, Grid, Slider, Typography } from "@mui/material";
-import {kebabCase} from "lodash";
-import { Fragment, Reducer, useReducer } from "react";
+import { Box, Card, CardContent, Grid, Slider, TextareaAutosize, Tooltip, Typography } from "@mui/material";
+import { kebabCase } from "lodash";
+import { 
+    Fragment,
+    MouseEvent,
+    MouseEventHandler,
+    Reducer,
+    useReducer,
+    useState
+} from "react";
 
 interface IBorderRadiusSide {
     side: string;
@@ -95,6 +102,8 @@ const reducer: Reducer<IBorderRadiusCorner[], IBorderRadiusReducerAction> = (sta
 };
 const BorderRadiusPreviewer = () => {
     const [borderRadius, dispatch] = useReducer(reducer, initialState);
+    const [openTooltip, setOpenTooltip] = useState<boolean>(false);
+
     const handleChange = (e: {side: string, value: number}, corner: string) => {
         dispatch({
             type: "update",
@@ -106,6 +115,14 @@ const BorderRadiusPreviewer = () => {
     const cssLines = borderRadius.map((corner: IBorderRadiusCorner) => {
         return `border-${kebabCase(corner.corner)}-radius: ${corner.sides[0].value}px ${corner.sides[1].value}px;`;
     });
+    const handleClick: MouseEventHandler<HTMLTextAreaElement> = (e: MouseEvent<HTMLTextAreaElement>) => {
+        const element = e.target as HTMLInputElement;
+        navigator.clipboard.writeText(element.value);
+        setOpenTooltip(true);
+        setTimeout(() => {
+            setOpenTooltip(false);
+        }, 1000);
+    };
     return (
         <>
             <Grid container spacing={2}>
@@ -118,7 +135,7 @@ const BorderRadiusPreviewer = () => {
                 )}
             </Grid>
             <Grid container mt={2}>
-                <Grid item direction="column" alignItems="center" justifyContent="center" xs={6}>
+                <Grid item xs={6}>
                     <Typography variant="body1" mb={2}>Preview</Typography>
                     <Box
                         sx={{
@@ -138,11 +155,24 @@ const BorderRadiusPreviewer = () => {
                     <Typography variant="body1" mb={2}>CSS</Typography>
                     <Card variant="outlined">
                         <CardContent>
-                            {cssLines.map((cssLine) => (
-                                <Typography key={cssLine} variant="body1" sx={{
-                                    fontFamily: "monospace"
-                                }}>{cssLine}</Typography>
-                            ))}
+                            <Tooltip 
+                                open={openTooltip}
+                                title="Copied!"
+                            >
+                                <TextareaAutosize
+                                    minRows={1}
+                                    style={{
+                                        width: "100%",
+                                        border: "0",
+                                        padding: "0",
+                                        resize: "none",
+                                        outline: "0",
+                                        cursor: "pointer"
+                                    }}
+                                    value={cssLines.join("\n")}
+                                    onClick={handleClick}
+                                />
+                            </Tooltip>
                         </CardContent>
                     </Card>
                 </Grid>
