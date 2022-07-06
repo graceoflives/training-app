@@ -1,6 +1,100 @@
-import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { useRef, useState } from "react";
 
 const Calculator = () => {
+    const [expression, setExpression] = useState("");
+    const [result, setResult] = useState("");
+    const canContinueWithResult = useRef(false);
+
+    const handleClick = (value: string) => {
+        switch (value) {
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+            if (canContinueWithResult.current) {
+                setExpression(value);
+                canContinueWithResult.current = false;
+            } else {
+                setExpression(expr => `${expr}${value}`);
+            }
+            break;
+        case "dot":
+            if (canContinueWithResult.current) {
+                setExpression(".");
+                canContinueWithResult.current = false;
+            } else {
+                setExpression(expr => `${expr}.`);
+            }
+            break;
+        case "add":
+            if (canContinueWithResult.current) {
+                setExpression(`${result}+`);
+            } else {
+                setExpression(expr => `${expr}+`);
+            }
+            canContinueWithResult.current = false;
+            break;
+        case "subtract":
+            if (canContinueWithResult.current) {
+                setExpression(`${result}-`);
+            } else {
+                setExpression(expr => `${expr}-`);
+            }
+            canContinueWithResult.current = false;
+            break;
+        case "multiply":
+            if (canContinueWithResult.current) {
+                setExpression(`${result}*`);
+            } else {
+                setExpression(expr => `${expr}*`);
+            }
+            canContinueWithResult.current = false;
+            break;
+        case "div":
+            if (canContinueWithResult.current) {
+                setExpression(`${result}/`);
+            } else {
+                setExpression(expr => `${expr}/`);
+            }
+            canContinueWithResult.current = false;
+            break;
+        case "percent":
+            if (canContinueWithResult.current) {
+                setExpression(`${result}%`);
+            } else {
+                setExpression(expr => `${expr}%`);
+            }
+            break;
+        case "clear":
+            setExpression(expr => expr.slice(0, -1));
+            break;
+        case "clearAll":
+            setExpression("");
+            setResult("");
+            canContinueWithResult.current = false;
+            break;
+        case "equals": {
+            const evaluableExpr = expression.replaceAll("%", "/100");
+            try {
+                const maybeResult = (new Function("return " + evaluableExpr))();
+                setResult(maybeResult);
+                canContinueWithResult.current = true;
+            } catch (error) {
+                // do nothing
+            }
+            
+            break;
+        }
+        default: 
+        }
+    }
     return (
         <Grid container alignItems="center" justifyContent="center" sx={{height: "100%"}}>
             <Box
@@ -8,17 +102,32 @@ const Calculator = () => {
                 sx={{ border: 2, borderColor: "grey.200", borderRadius: 2 }}
                 p={2}
             >
-                <Screen/>
-                <ButtonArrange/>
+                <Screen expr={expression} result={result}/>
+                <ButtonArrange onClick={handleClick}/>
             </Box>
         </Grid>
     )
 }
 
-const Screen = () => {
+interface IScreenProps {
+    expr: string;
+    result: string;
+}
+
+const Screen = (props: IScreenProps) => {
     return (<>
-        <Typography variant="body1" sx={{color: "grey.400"}} align="right">1+2=</Typography>
-        <Typography variant="body1" sx={{fontSize: "2.5rem"}} align="right">3</Typography>
+        <Typography
+            variant="body1"
+            sx={{color: "grey.400", fontFamily: "monospace" }}
+            align="right">
+            {props.expr || "\u00A0"}
+        </Typography>
+        <Typography 
+            variant="body1" 
+            sx={{fontSize: "2.5rem", fontFamily: "monospace" }}
+            align="right">
+            {props.result || "\u00A0"}
+        </Typography>
     </>);
 }
 
@@ -28,10 +137,15 @@ interface IButton {
     color?: "primary" | "secondary" | "success" | "error" | "info" | "warning";
     size: number;
 }
-const ButtonArrange = () => {
+
+interface IButtonArrangeProps {
+    onClick: (value: string) => void;
+}
+
+const ButtonArrange = (props: IButtonArrangeProps) => {
     const buttonList: IButton[] = [
         {
-            value: "clearInput",
+            value: "clear",
             title: "C",
             color: "secondary",
             size: 1,
@@ -147,6 +261,7 @@ const ButtonArrange = () => {
                             fontSize: "2.5rem",
                         }}
                         fullWidth
+                        onClick={() => props.onClick(button.value)}
                     >
                         {button.title}
                     </Button>
