@@ -1,4 +1,5 @@
-import { Box, Grid, Slider, Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid, Slider, Typography } from "@mui/material";
+import {kebabCase} from "lodash";
 import { Fragment, Reducer, useReducer } from "react";
 
 interface IBorderRadiusSide {
@@ -102,6 +103,9 @@ const BorderRadiusPreviewer = () => {
             value: e.value
         });
     }
+    const cssLines = borderRadius.map((corner: IBorderRadiusCorner) => {
+        return `border-${kebabCase(corner.corner)}-radius: ${corner.sides[0].value}px ${corner.sides[1].value}px;`;
+    });
     return (
         <>
             <Grid container spacing={2}>
@@ -113,21 +117,35 @@ const BorderRadiusPreviewer = () => {
                     />
                 )}
             </Grid>
-            <Grid container direction="column" alignItems="center" justifyContent="center" mt={2}>
-                <Typography variant="body1" mb={2}>Preview</Typography>
-                <Box
-                    sx={{
-                        width: "50vh",
-                        height: "50vh",
-                        borderWidth: 4,
-                        borderStyle: "solid",
-                        borderColor: "primary.dark",
-                        ...borderRadius.reduce((prev: {}, {corner, sides}) => ({
-                            ...prev, 
-                            [`border${corner}Radius`]: `${sides[0].value}px ${sides[1].value}px`
-                        }), {})
-                    }}
-                />
+            <Grid container mt={2}>
+                <Grid item direction="column" alignItems="center" justifyContent="center" xs={6}>
+                    <Typography variant="body1" mb={2}>Preview</Typography>
+                    <Box
+                        sx={{
+                            width: "50vh",
+                            height: "50vh",
+                            borderWidth: 4,
+                            borderStyle: "solid",
+                            borderColor: "primary.dark",
+                            ...borderRadius.reduce((prev: Record<string, unknown>, {corner, sides}) => ({
+                                ...prev, 
+                                [`border${corner}Radius`]: `${sides[0].value}px ${sides[1].value}px`
+                            }), {})
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography variant="body1" mb={2}>CSS</Typography>
+                    <Card variant="outlined">
+                        <CardContent>
+                            {cssLines.map((cssLine) => (
+                                <Typography key={cssLine} variant="body1" sx={{
+                                    fontFamily: "monospace"
+                                }}>{cssLine}</Typography>
+                            ))}
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
         </>
     )
@@ -135,8 +153,7 @@ const BorderRadiusPreviewer = () => {
 
 interface InputCornerProps {
     corner: IBorderRadiusCorner;
-    // eslint-disable-next-line no-empty-pattern
-    onChange: ({}: {side: string, value: number}) => void
+    onChange: ({side, value}: {side: string, value: number}) => void
 }
 
 const InputCorner = (props: InputCornerProps) => {
