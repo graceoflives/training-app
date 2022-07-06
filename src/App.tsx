@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import LeftMenu from "./components/LeftMenu";
 import Bin2Dec from "./projects/Bin2Dec";
 import BorderRadiusPreviewer from "./projects/BorderRadiusPreviewer";
+import Calculator from "./projects/Calculator";
 
 function App() {
     return (
@@ -11,12 +12,13 @@ function App() {
             <LeftMenu />
             <Box
                 component="main"
-                sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+                sx={{ flexGrow: 1, bgcolor: "background.default", minHeight: "100vh" }}
             >
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/bin2dec" element={<Bin2Dec />} />
                     <Route path="/borderRadiusPreviewer" element={<BorderRadiusPreviewer />} />
+                    <Route path="/calculator" element={<Calculator/>} />
                 </Routes>
             </Box>
         </Box>

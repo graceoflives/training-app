@@ -1,8 +1,26 @@
-import { Button, Divider, Drawer, MenuItem, MenuList } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, Divider, Drawer, Link, MenuItem, MenuList } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+interface IMenuItem {
+    link: string;
+    title: string;
+}
 
-const drawerWidth = 360;
+const drawerWidth = 240;
 const LeftMenu = () => {
+    const items: IMenuItem[] = [
+        {
+            link: "/bin2dec",
+            title: "Bin2Dec"
+        },
+        {
+            link: "/borderRadiusPreviewer",
+            title: "Border Radius Previewer"
+        },
+        {
+            link: "/calculator",
+            title: "Calculator"
+        },
+    ];
     return (
         <Drawer
             anchor={"left"}
@@ -17,21 +35,18 @@ const LeftMenu = () => {
         >
             <MenuList>
                 <MenuItem>
-                    <Button component={Link} to="/" variant="outlined" fullWidth>
+                    <Button component={RouterLink} to="/" variant="outlined" fullWidth>
                         Home
                     </Button>
                 </MenuItem>
                 <Divider />
-                <MenuItem>
-                    <Button component={Link} to="/bin2dec" fullWidth>
-                        Bin2Dec
-                    </Button>
-                </MenuItem>
-                <MenuItem>
-                    <Button component={Link} to="/borderRadiusPreviewer" fullWidth>
-                        Border Radius Previewer
-                    </Button>
-                </MenuItem>
+                {items.map(item =>(
+                    <MenuItem key={item.title}>
+                        <Link component={RouterLink} to={item.link} underline="none" sx={{width: "100%"}}>
+                            {item.title}
+                        </Link>
+                    </MenuItem>    
+                ))}
             </MenuList>
         </Drawer>
     )

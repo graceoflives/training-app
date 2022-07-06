@@ -124,7 +124,7 @@ const BorderRadiusPreviewer = () => {
         }, 1000);
     };
     return (
-        <>
+        <Grid container p={2}>
             <Grid container spacing={2}>
                 {borderRadius.map(
                     (c) => <InputCorner
@@ -177,7 +177,7 @@ const BorderRadiusPreviewer = () => {
                     </Card>
                 </Grid>
             </Grid>
-        </>
+        </Grid>
     )
 };
 
