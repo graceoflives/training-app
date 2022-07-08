@@ -5,6 +5,7 @@ import LeftMenu from "./components/LeftMenu";
 import Bin2Dec from "./projects/Bin2Dec";
 import BorderRadiusPreviewer from "./projects/BorderRadiusPreviewer";
 import Calculator from "./projects/Calculator";
+import ChristmasLights from "./projects/ChristmasLights";
 
 function App() {
     return (
@@ -18,7 +19,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/bin2dec" element={<Bin2Dec />} />
                     <Route path="/borderRadiusPreviewer" element={<BorderRadiusPreviewer />} />
-                    <Route path="/calculator" element={<Calculator/>} />
+                    <Route path="/calculator" element={<Calculator />} />
+                    <Route path="/christmasLights" element={<ChristmasLights />} />
                 </Routes>
             </Box>
         </Box>

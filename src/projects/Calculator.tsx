@@ -87,7 +87,7 @@ const Calculator = () => {
                 setResult(maybeResult);
                 canContinueWithResult.current = true;
             } catch (error) {
-                // do nothing
+                alert("Malformed Expression!");
             }
             
             break;

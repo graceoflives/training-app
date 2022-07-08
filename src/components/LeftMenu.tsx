@@ -20,6 +20,10 @@ const LeftMenu = () => {
             link: "/calculator",
             title: "Calculator"
         },
+        {
+            link: "/christmasLights",
+            title: "Christmas Lights"
+        }
     ];
     return (
         <Drawer
