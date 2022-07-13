@@ -1,4 +1,16 @@
-import { Box, Checkbox, darken, FormControlLabel, Grid, Input, lighten, Slider, Typography } from "@mui/material";
+import { 
+    Box,
+    Checkbox,
+    darken,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Grid,
+    Input,
+    lighten,
+    Slider,
+    Typography
+} from "@mui/material";
 import { styled, keyframes } from "@mui/system";
 import { useState } from "react";
 
@@ -23,9 +35,8 @@ const LightBulb = styled(Box)<ILightBulbProps>(({ size, color, isOn, delay }) =>
     width: size,
     aspectRatio: "1",
     borderRadius: "50%",
-    backgroundColor: isOn ? "unset" : darken(color, 0.5),
-    transition: "all .5s linear",
-    animation: isOn ? `0.3s ease-in-out ${delay} infinite alternate ${spin(color, size)}` : "unset"
+    backgroundColor: isOn ? color : darken(color, 0.5),
+    animation: isOn ? `1s ease-in-out ${delay} infinite alternate ${spin(color, size)}` : "unset"
 })); 
 
 interface ILight {
@@ -94,29 +105,32 @@ const Settings = ({lights, onToggleBulb, onChangeColor, onChangeSize}: ISettingP
                 {lights.map(
                     (light, index) => (
                         <Grid item flex="1" key={index}>
-                            <Typography variant="h3" fontSize={14}>{`Light #${1+index}`}</Typography>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={light.isOn}
-                                        onChange={() => onToggleBulb(index)}
-                                    />
-                                }
-                                label="On/Off"
-                            />
-                            <Input
-                                type="color"
-                                fullWidth
-                                value={light.color}
-                                onChange={(e) => onChangeColor(index, e.target.value)}
-                            />
-                            <Slider
-                                value={light.size}
-                                onChange={(_, newValue) => onChangeSize(index, newValue as number)}
-                                valueLabelDisplay="auto"
-                                min={10}
-                                max={80}
-                            />
+                            <FormControl fullWidth>
+                                <FormLabel component="legend">{`Light #${1+index}`}</FormLabel>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={light.isOn}
+                                            onChange={() => onToggleBulb(index)}
+                                        />
+                                    }
+                                    label="On/Off"
+                                />
+                                <Input
+                                    type="color"
+                                    fullWidth
+                                    value={light.color}
+                                    onChange={(e) => onChangeColor(index, e.target.value)}
+                                />
+                                <Slider
+                                    value={light.size}
+                                    onChange={(_, newValue) => onChangeSize(index, newValue as number)}
+                                    valueLabelDisplay="auto"
+                                    min={10}
+                                    max={80}
+                                    size="small"
+                                />
+                            </FormControl>
                         </Grid>
                     )
                 )}
@@ -164,7 +178,7 @@ const ChristmasLights = () => {
         <Grid
             container 
             direction={"column"}
-            sx={{height: "100%"}}
+            sx={{height: "100%", overflowX: "hidden"}}
         >
             <Settings
                 lights={lights}
@@ -190,7 +204,10 @@ const ChristmasLights = () => {
                         >
                             <LightBulb
                                 size={light.size}
-                                color={light.color} isOn={light.isOn} delay={light.delay} key={index}/>
+                                color={light.color}
+                                isOn={light.isOn}
+                                delay={light.delay}
+                            />
                         </Grid>
                     )
                 })}
