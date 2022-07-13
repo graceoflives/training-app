@@ -23,6 +23,10 @@ const LeftMenu = () => {
         {
             link: "/christmasLights",
             title: "Christmas Lights"
+        },
+        {
+            link: "/causeEffect",
+            title: "Cause Effect App"
         }
     ];
     return (

@@ -5,6 +5,7 @@ import LeftMenu from "./components/LeftMenu";
 import Bin2Dec from "./projects/Bin2Dec";
 import BorderRadiusPreviewer from "./projects/BorderRadiusPreviewer";
 import Calculator from "./projects/Calculator";
+import CauseEffect from "./projects/CauseEffect";
 import ChristmasLights from "./projects/ChristmasLights";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/borderRadiusPreviewer" element={<BorderRadiusPreviewer />} />
                     <Route path="/calculator" element={<Calculator />} />
                     <Route path="/christmasLights" element={<ChristmasLights />} />
+                    <Route path="/causeEffect" element={<CauseEffect />} />
                 </Routes>
             </Box>
         </Box>
