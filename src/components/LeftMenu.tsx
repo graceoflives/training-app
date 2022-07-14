@@ -9,25 +9,29 @@ const drawerWidth = 240;
 const LeftMenu = () => {
     const items: IMenuItem[] = [
         {
-            link: "/bin2dec",
+            link: "bin2dec",
             title: "Bin2Dec"
         },
         {
-            link: "/borderRadiusPreviewer",
+            link: "borderRadiusPreviewer",
             title: "Border Radius Previewer"
         },
         {
-            link: "/calculator",
+            link: "calculator",
             title: "Calculator"
         },
         {
-            link: "/christmasLights",
+            link: "christmasLights",
             title: "Christmas Lights"
         },
         {
-            link: "/causeEffect",
+            link: "causeEffect",
             title: "Cause Effect App"
-        }
+        },
+        {
+            link: "colorCycle",
+            title: "Color Cycle"
+        },
     ];
     return (
         <Drawer
@@ -50,7 +54,7 @@ const LeftMenu = () => {
                 <Divider />
                 {items.map(item =>(
                     <MenuItem key={item.title}>
-                        <Link component={RouterLink} to={item.link} underline="none" sx={{width: "100%"}}>
+                        <Link component={RouterLink} to={`/${item.link}`} underline="none" sx={{width: "100%"}}>
                             {item.title}
                         </Link>
                     </MenuItem>    

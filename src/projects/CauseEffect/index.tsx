@@ -45,7 +45,7 @@ const CauseEffect = () => {
         selected
     }), [items, handleClickItem, selected]);
 
-    const selectedItem = items[selected || 0] ?? null;
+    const selectedItem = (selected === null) ? null : items[selected];
 
     return (<>
         <Grid container

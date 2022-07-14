@@ -1,14 +1,45 @@
-import "./App.css";
 import { Box } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
 import LeftMenu from "./components/LeftMenu";
 import Bin2Dec from "./projects/Bin2Dec";
 import BorderRadiusPreviewer from "./projects/BorderRadiusPreviewer";
 import Calculator from "./projects/Calculator";
 import CauseEffect from "./projects/CauseEffect";
 import ChristmasLights from "./projects/ChristmasLights";
+import ColorCycle from "./projects/ColorCycle";
 
 function App() {
+    const routes : {path: string, Component: () => JSX.Element}[] = [
+        {
+            path: "",
+            Component: Home
+        },
+        {
+            path: "bin2dec",
+            Component: Bin2Dec
+        },
+        {
+            path: "borderRadiusPreviewer",
+            Component: BorderRadiusPreviewer
+        },
+        {
+            path: "calculator",
+            Component: Calculator
+        },
+        {
+            path: "christmasLights",
+            Component: ChristmasLights
+        },
+        {
+            path: "causeEffect",
+            Component: CauseEffect
+        },
+        {
+            path: "colorCycle",
+            Component: ColorCycle
+        },
+    ]
     return (
         <Box sx={{ display: "flex" }}>
             <LeftMenu />
@@ -17,19 +48,16 @@ function App() {
                 sx={{ flexGrow: 1, bgcolor: "background.default", minHeight: "100vh" }}
             >
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/bin2dec" element={<Bin2Dec />} />
-                    <Route path="/borderRadiusPreviewer" element={<BorderRadiusPreviewer />} />
-                    <Route path="/calculator" element={<Calculator />} />
-                    <Route path="/christmasLights" element={<ChristmasLights />} />
-                    <Route path="/causeEffect" element={<CauseEffect />} />
+                    {routes.map(({path, Component}) => (
+                        <Route key={path} path={`/${path}`} element={<Component />} />    
+                    ))}
                 </Routes>
             </Box>
         </Box>
     );
 }
 
-function Home() {
+const Home = () => {
     return (
         <>
             <main>

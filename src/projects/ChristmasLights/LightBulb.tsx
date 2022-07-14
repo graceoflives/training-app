@@ -1,7 +1,5 @@
-import {
-    Box, darken, lighten
-} from "@mui/material";
-import { keyframes, styled } from "@mui/system";
+import { Box } from "@mui/material";
+import { darken, keyframes, lighten, styled } from "@mui/system";
 
 interface ILightBulbProps {
     size: number;
